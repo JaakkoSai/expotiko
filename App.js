@@ -1,34 +1,17 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
-import { Alert } from "react-native";
-import { useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import HomeScreen from "./screens/HomeScreen";
+import Laskin from "./screens/Laskin";
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
-  const [text, setText] = useState("");
-
-  const buttonPressed = () => {
-    Alert.alert("You typed " + text);
-  };
-
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: "#fff",
-      alignItems: "center",
-      justifyContent: "center",
-    },
-  });
-
   return (
-    <View style={styles.container}>
-      <Text>Hello World!</Text>
-      <StatusBar style="auto" />
-      <TextInput
-        style={{ width: 200, borderColor: "gray", borderWidth: 1 }}
-        onChangeText={(text) => setText(text)}
-        value={text}
-      />
-      <Button onPress={buttonPressed} title="press me" />
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name="Home" component={HomeScreen} />
+        <Tab.Screen name="Laskin" component={Laskin} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
