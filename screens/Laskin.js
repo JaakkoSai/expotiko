@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, Alert, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 
 const Laskin = () => {
   const [ekaNumero, setEkaNumero] = useState("");
@@ -9,34 +17,42 @@ const Laskin = () => {
   const handlePlussaus = () => {
     const sum = parseFloat(ekaNumero) + parseFloat(tokaNumero);
     setResult(sum);
+    Keyboard.dismiss();
   };
   const handleMiinus = () => {
     const miinus = parseFloat(ekaNumero) - parseFloat(tokaNumero);
     setResult(miinus);
+    Keyboard.dismiss();
+  };
+
+  const dismissKeyboard = () => {
+    Keyboard.dismiss();
   };
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        keyboardType="numeric"
-        value={ekaNumero}
-        onChangeText={setEkaNumero}
-        placeholder="Enter first number"
-      />
-      <TextInput
-        style={styles.input}
-        keyboardType="numeric"
-        value={tokaNumero}
-        onChangeText={setTokaNumero}
-        placeholder="Enter second number"
-      />
-      <View style={styles.buttonContainer}>
-        <Button title="+" onPress={handlePlussaus} />
-        <Button title="-" onPress={handleMiinus} />
+    <TouchableWithoutFeedback onPress={dismissKeyboard}>
+      <View style={styles.container}>
+        <TextInput
+          style={styles.input}
+          keyboardType="numeric"
+          value={ekaNumero}
+          onChangeText={setEkaNumero}
+          placeholder="Enter first number"
+        />
+        <TextInput
+          style={styles.input}
+          keyboardType="numeric"
+          value={tokaNumero}
+          onChangeText={setTokaNumero}
+          placeholder="Enter second number"
+        />
+        <View style={styles.buttonContainer}>
+          <Button title="+" onPress={handlePlussaus} />
+          <Button title="-" onPress={handleMiinus} />
+        </View>
+        <Text style={styles.result}>Result: {result}</Text>
       </View>
-      <Text style={styles.result}>Result: {result}</Text>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 
