@@ -7,21 +7,29 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   Keyboard,
+  FlatList,
 } from "react-native";
 
 const Laskin = () => {
   const [ekaNumero, setEkaNumero] = useState("");
   const [tokaNumero, setTokaNumero] = useState("");
-  const [result, setResult] = useState(null);
+  const [result, setResult] = useState([]);
 
   const handlePlussaus = () => {
     const sum = parseFloat(ekaNumero) + parseFloat(tokaNumero);
-    setResult(sum);
+    setResult((prevResult) => [
+      ...prevResult,
+      `Result: ${ekaNumero} + ${tokaNumero} = ${sum}`,
+    ]);
     Keyboard.dismiss();
   };
+
   const handleMiinus = () => {
     const miinus = parseFloat(ekaNumero) - parseFloat(tokaNumero);
-    setResult(miinus);
+    setResult((prevResult) => [
+      ...prevResult,
+      `Result: ${ekaNumero} - ${tokaNumero} = ${miinus}`,
+    ]);
     Keyboard.dismiss();
   };
 
@@ -50,7 +58,11 @@ const Laskin = () => {
           <Button title="+" onPress={handlePlussaus} />
           <Button title="-" onPress={handleMiinus} />
         </View>
-        <Text style={styles.result}>Result: {result}</Text>
+        <FlatList
+          data={result}
+          renderItem={({ item }) => <Text style={styles.result}>{item}</Text>}
+          keyExtractor={(item, index) => index.toString()}
+        />
       </View>
     </TouchableWithoutFeedback>
   );
